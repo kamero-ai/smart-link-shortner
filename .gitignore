@@ -1,0 +1,331 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.txt
+coverage.html
+*.lcov
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Built binaries
+main
+kamero-url-shortener
+url-shortener
+test-build
+*.bin
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+*.env
+secrets/
+*.secret
+*.key
+*.pem
+*.crt
+*.csr
+*.p12
+*.pfx
+*.jks
+
+# Configuration files with sensitive data
+config.local.*
+settings.local.*
+*.local.*
+!*.example
+!*.template
+
+# Database files and dumps
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.dump
+*.backup
+*.bak
+
+# Logs
+*.log
+logs/
+*.logs
+log/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary folders
+tmp/
+temp/
+/tmp/
+/temp/
+
+# Air live reload
+tmp/
+.air.toml.bak
+
+# Build artifacts
+build/
+dist/
+out/
+bin/
+
+# Docker
+.dockerignore.bak
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Kubernetes secrets and local configs
+secrets/
+*.yaml.bak
+*.yml.bak
+k8s/secrets/
+*.kubeconfig
+
+# IDE and editor files
+.vscode/
+!.vscode/settings.json.example
+!.vscode/tasks.json.example
+!.vscode/launch.json.example
+!.vscode/extensions.json.example
+.idea/
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+*~
+Session.vim
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# Emacs
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Code analysis and documentation (generated)
+CodeGatherer/
+code-analysis-*.md
+docs/_build/
+site/
+
+# Node.js (if any tools are added)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn/
+.yarn-integrity
+.pnp.*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Python (if any tools are added)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Cache directories
+.cache/
+.parcel-cache/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.eslintcache
+.stylelintcache
+
+# Profiling data
+*.prof
+*.pprof
+*.mem
+
+# Local development files
+local/
+dev/
+*.local.sh
+scripts/local/
+
+# Deployment artifacts
+deployment/local/
+deployment/secrets/
+
+# Terraform (if used)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+!*.tfvars.example
+
+# Helm charts (if used)
+charts/*/charts/
+charts/*/requirements.lock
+
+# Tilt files
+Tiltfile.local
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json.example
+!.vscode/tasks.json.example
+!.vscode/launch.json.example
+!.vscode/extensions.json.example
+
+# Local development certificates
+localhost.pem
+localhost-key.pem
+*.local.pem
+*.local.key
+
+# Backup files
+*.backup
+*.bak
+*.old
+*.orig
+*.save
+*.swp
+*.tmp
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Package files
+*.deb
+*.rpm
+*.dmg
+*.pkg
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Package lock files (if Node.js tools are added)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Local configuration overrides
+config.local.*
+settings.local.*
+app.local.*
+*.local.json
+*.local.yaml
+*.local.yml
+
+# Test coverage
+coverage/
+.nyc_output/
+coverage.txt
+coverage.html
+*.coverprofile
+
+# Documentation builds
+docs/_build/
+site/
+_site/
+
+# MacOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VSCode
+.vscode/
+!.vscode/settings.json.example
+!.vscode/tasks.json.example
+!.vscode/launch.json.example
+!.vscode/extensions.json.example
+
+# Local development
+local/
+dev/
+*.local.*
+
+# Keep example files
+!*.example
+!*.template
+!*.sample

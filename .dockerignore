@@ -1,0 +1,131 @@
+# Git and version control
+.git
+.gitignore
+.gitlab-ci.yml
+*.md
+README.md
+
+# Code analysis and documentation (exclude CodeGatherer)
+CodeGatherer/
+code-analysis-*.md
+docs/
+*.md
+
+# Environment files (should not be in Docker image)
+.env
+.env.*
+*.env
+
+# Build artifacts and binaries (will be rebuilt in Docker)
+main
+kamero-url-shortener
+url-shortener
+tmp/
+build/
+dist/
+
+# Development tools
+air.toml
+.air.toml
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Node.js (if any frontend tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Testing
+*_test.go
+testdata/
+coverage.out
+*.test
+
+# Deployment and infrastructure
+scripts/
+deployment/
+kubernetes/
+k8s/
+*.yaml
+*.yml
+!static/*.html
+url-shortener-service.yaml
+build_and_deploy.sh
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+
+# Database files (should not be in container)
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+migrations/
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# Backup files
+*.backup
+*.bak
+
+# Local development
+local/
+dev/
+
+# Cache directories
+.cache/
+*.cache
+
+# Profiling and debugging
+*.prof
+*.pprof
+*.mem
+
+# Coverage reports
+coverage/
+*.lcov
+coverage.html
+coverage.txt
+
+# Dependency directories that will be rebuilt
+vendor/
+
+# Go workspace file
+go.work
+
+# Test coverage
+c.out
+
+# Air live reload
+.air/

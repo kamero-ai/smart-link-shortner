@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Keys Management - L.Kamero.ai</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f8f9fa;
+        line-height: 1.6;
+      }
+
+      .header {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      }
+
+      .header h1 {
+        margin: 0 0 20px 0;
+        color: #2c3e50;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: #007bff;
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 2px solid #007bff;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        background: #007bff;
+        color: white;
+        transform: translateY(-1px);
+      }
+
+      .nav-links a.active {
+        background: #007bff;
+        color: white;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .create-section {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+      }
+
+      .api-keys-section {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .section-icon {
+        width: 32px;
+        height: 32px;
+        background: #007bff;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 16px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e8ed;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .btn {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn:hover {
+        background: #0056b3;
+        transform: translateY(-1px);
+      }
+
+      .btn:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-danger {
+        background: #dc3545;
+      }
+
+      .btn-danger:hover {
+        background: #c82333;
+      }
+
+      .btn-small {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
+      .btn-icon {
+        padding: 8px 12px;
+      }
+
+      .api-keys-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      .api-keys-table th,
+      .api-keys-table td {
+        padding: 16px 12px;
+        text-align: left;
+        border-bottom: 1px solid #e1e8ed;
+      }
+
+      .api-keys-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #2c3e50;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .api-keys-table tr:hover {
+        background: #f8f9fa;
+      }
+
+      .api-key-id {
+        font-family: "Monaco", "Consolas", monospace;
+        background: #e9ecef;
+        padding: 6px 10px;
+        border-radius: 6px;
+        color: #007bff;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .api-key-secret {
+        font-family: "Monaco", "Consolas", monospace;
+        background: #d1ecf1;
+        padding: 6px 10px;
+        border-radius: 6px;
+        color: #0c5460;
+        font-size: 12px;
+        word-break: break-all;
+        max-width: 200px;
+      }
+
+      .status-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .status-active {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-inactive {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .copy-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+        margin-left: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .copy-btn:hover {
+        background: #218838;
+        transform: scale(1.05);
+      }
+
+      .success-message {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .error-message {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .warning-message {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        color: #856404;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+      }
+
+      .empty-state h3 {
+        margin-bottom: 10px;
+        color: #6c757d;
+      }
+
+      .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+      }
+
+      .copy-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .copy-notification.show {
+        transform: translateX(0);
+      }
+
+      .api-key-details {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .detail-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .detail-label {
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .detail-value {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .usage-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .usage-stat {
+        text-align: center;
+      }
+
+      .usage-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #007bff;
+      }
+
+      .usage-label {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 4px;
+      }
+
+      .refresh-indicator {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ffffff;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          flex-direction: column;
+        }
+
+        .api-keys-table {
+          font-size: 14px;
+        }
+
+        .api-keys-table th,
+        .api-keys-table td {
+          padding: 12px 8px;
+        }
+
+        .create-section {
+          position: static;
+        }
+
+        body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🔑 API Keys Management</h1>
+      <div class="nav-links">
+        <a href="/admin">🔑 API Keys Management</a>
+        <a href="/admin/analytics">📊 All URLs Analytics</a>
+        <a href="/dashboard">📈 Individual URL Analytics</a>
+        <a href="/">🏠 URL Shortener</a>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="create-section">
+        <div class="section-title">
+          <div class="section-icon">➕</div>
+          <h2>Create New API Key</h2>
+        </div>
+
+        <form id="createApiKeyForm">
+          <div class="form-group">
+            <label for="apiKeyName">API Key Name *</label>
+            <input
+              type="text"
+              id="apiKeyName"
+              required
+              placeholder="e.g., Mobile App Production"
+              maxlength="100"
+            />
+          </div>
+          <div class="form-group">
+            <label for="apiKeyDescription">Description</label>
+            <textarea
+              id="apiKeyDescription"
+              placeholder="Optional description for this API key..."
+              maxlength="500"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn" id="createBtn">
+            <span>🔑</span> Create API Key
+          </button>
+        </form>
+
+        <div id="newApiKeyResult" style="display: none">
+          <h3>🎉 New API Key Created!</h3>
+          <div class="warning-message">
+            <span>⚠️</span>
+            <div>
+              <strong>Important:</strong> Save these credentials now. The secret
+              will only be shown once and cannot be recovered.
+            </div>
+          </div>
+
+          <div class="api-key-details">
+            <div class="detail-row">
+              <span class="detail-label">API Key ID:</span>
+              <div class="detail-value">
+                <span id="newApiKeyId" class="api-key-id"></span>
+                <button
+                  class="copy-btn"
+                  onclick="copyToClipboard('newApiKeyId')"
+                  title="Copy API Key ID"
+                >
+                  📋
+                </button>
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <span class="detail-label">API Key Secret:</span>
+              <div class="detail-value">
+                <span id="newApiKeySecret" class="api-key-secret"></span>
+                <button
+                  class="copy-btn"
+                  onclick="copyToClipboard('newApiKeySecret')"
+                  title="Copy API Key Secret"
+                >
+                  📋
+                </button>
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <span class="detail-label">Authorization Header:</span>
+              <div class="detail-value">
+                <span id="newAuthHeader" class="api-key-secret"></span>
+                <button
+                  class="copy-btn"
+                  onclick="copyToClipboard('newAuthHeader')"
+                  title="Copy Authorization Header"
+                >
+                  📋
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="success-message">
+            <span>ℹ️</span>
+            <div>
+              Use the Authorization header in your API requests:
+              <code>Authorization: Bearer {api_key_id}:{api_key_secret}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-keys-section">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+          "
+        >
+          <div class="section-title">
+            <div class="section-icon">🗝️</div>
+            <h2>Existing API Keys</h2>
+          </div>
+          <button class="btn btn-icon" onclick="loadApiKeys()" id="refreshBtn">
+            <span id="refreshIcon">🔄</span> Refresh
+          </button>
+        </div>
+
+        <div id="loadingIndicator" class="loading">
+          <div class="loading-spinner"></div>
+          <div>Loading API keys...</div>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none">
+          <span>❌</span>
+          <div id="errorText"></div>
+        </div>
+
+        <div id="apiKeysContainer">
+          <div id="apiKeysStats" class="usage-stats" style="display: none">
+            <div class="usage-stat">
+              <div class="usage-number" id="totalKeys">0</div>
+              <div class="usage-label">Total Keys</div>
+            </div>
+            <div class="usage-stat">
+              <div class="usage-number" id="activeKeys">0</div>
+              <div class="usage-label">Active Keys</div>
+            </div>
+            <div class="usage-stat">
+              <div class="usage-number" id="totalRequests">0</div>
+              <div class="usage-label">Total Requests</div>
+            </div>
+          </div>
+
+          <table class="api-keys-table" id="apiKeysTable" style="display: none">
+            <thead>
+              <tr>
+                <th>Key ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Last Used</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="apiKeysTableBody"></tbody>
+          </table>
+
+          <div id="emptyState" class="empty-state" style="display: none">
+            <div class="empty-state-icon">🔑</div>
+            <h3>No API Keys Found</h3>
+            <p>
+              Create your first API key to get started with programmatic access
+              to the URL shortener.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="copyNotification" class="copy-notification">
+      <span>✅</span> Copied to clipboard!
+    </div>
+
+    <script>
+      let apiKeysData = [];
+
+      // Load API keys on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        loadApiKeys();
+      });
+
+      // Create new API key
+      document
+        .getElementById("createApiKeyForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const createBtn = document.getElementById("createBtn");
+          const originalBtnContent = createBtn.innerHTML;
+
+          // Show loading state
+          createBtn.innerHTML =
+            '<div class="refresh-indicator"></div> Creating...';
+          createBtn.disabled = true;
+
+          const name = document.getElementById("apiKeyName").value.trim();
+          const description = document
+            .getElementById("apiKeyDescription")
+            .value.trim();
+
+          if (!name) {
+            showError("API Key name is required");
+            createBtn.innerHTML = originalBtnContent;
+            createBtn.disabled = false;
+            return;
+          }
+
+          try {
+            const response = await fetch("/admin/api/v1/api-keys", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name, description }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              // Show the new API key details
+              document.getElementById("newApiKeyId").textContent =
+                result.key_id;
+              document.getElementById("newApiKeySecret").textContent =
+                result.key_secret;
+              document.getElementById(
+                "newAuthHeader"
+              ).textContent = `Bearer ${result.key_id}:${result.key_secret}`;
+              document.getElementById("newApiKeyResult").style.display =
+                "block";
+
+              // Clear form
+              document.getElementById("createApiKeyForm").reset();
+
+              // Reload API keys list
+              loadApiKeys();
+
+              // Scroll to result
+              document.getElementById("newApiKeyResult").scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            } else {
+              showError("Error creating API key: " + result.error);
+            }
+          } catch (error) {
+            showError("Error: " + error.message);
+          } finally {
+            createBtn.innerHTML = originalBtnContent;
+            createBtn.disabled = false;
+          }
+        });
+
+      // Load API keys
+      async function loadApiKeys() {
+        try {
+          const refreshIcon = document.getElementById("refreshIcon");
+          refreshIcon.innerHTML = '<div class="refresh-indicator"></div>';
+
+          document.getElementById("loadingIndicator").style.display = "flex";
+          document.getElementById("errorMessage").style.display = "none";
+          document.getElementById("apiKeysTable").style.display = "none";
+          document.getElementById("emptyState").style.display = "none";
+          document.getElementById("apiKeysStats").style.display = "none";
+
+          const response = await fetch("/admin/api/v1/api-keys");
+          const apiKeys = await response.json();
+
+          if (response.ok) {
+            apiKeysData = apiKeys;
+
+            if (apiKeys.length === 0) {
+              document.getElementById("emptyState").style.display = "block";
+            } else {
+              renderApiKeysTable(apiKeys);
+              updateStats(apiKeys);
+              document.getElementById("apiKeysTable").style.display = "table";
+              document.getElementById("apiKeysStats").style.display = "grid";
+            }
+          } else {
+            showError("Failed to load API keys: " + apiKeys.error);
+          }
+        } catch (error) {
+          showError("Error loading API keys: " + error.message);
+        } finally {
+          document.getElementById("loadingIndicator").style.display = "none";
+          setTimeout(() => {
+            document.getElementById("refreshIcon").textContent = "🔄";
+          }, 1000);
+        }
+      }
+
+      // Update statistics
+      function updateStats(apiKeys) {
+        const totalKeys = apiKeys.length;
+        const activeKeys = apiKeys.filter((key) => key.is_active).length;
+        const totalRequests = apiKeys.reduce(
+          (sum, key) => sum + (key.request_count || 0),
+          0
+        );
+
+        document.getElementById("totalKeys").textContent = totalKeys;
+        document.getElementById("activeKeys").textContent = activeKeys;
+        document.getElementById("totalRequests").textContent =
+          formatNumber(totalRequests);
+      }
+
+      // Render API keys table
+      function renderApiKeysTable(apiKeys) {
+        const tbody = document.getElementById("apiKeysTableBody");
+        tbody.innerHTML = apiKeys
+          .map((apiKey) => {
+            const createdDate = new Date(apiKey.created_at);
+            const lastUsedDate = apiKey.last_used_at
+              ? new Date(apiKey.last_used_at)
+              : null;
+            const isRecent =
+              Date.now() - createdDate.getTime() < 24 * 60 * 60 * 1000;
+
+            return `
+                    <tr ${isRecent ? 'style="background: #fff3cd;"' : ""}>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="api-key-id">${apiKey.key_id}</span>
+                                <button class="copy-btn" onclick="copyText('${
+                                  apiKey.key_id
+                                }')" title="Copy API Key ID">📋</button>
+                                ${
+                                  isRecent
+                                    ? '<span style="font-size: 12px;" title="Created recently">🆕</span>'
+                                    : ""
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <strong style="color: #2c3e50;">${escapeHtml(
+                              apiKey.name
+                            )}</strong>
+                        </td>
+                        <td>
+                            <span style="color: #6c757d;">${
+                              escapeHtml(apiKey.description) || "-"
+                            }</span>
+                        </td>
+                        <td>
+                            <span class="status-badge ${
+                              apiKey.is_active
+                                ? "status-active"
+                                : "status-inactive"
+                            }">
+                                <span>${apiKey.is_active ? "🟢" : "🔴"}</span>
+                                ${apiKey.is_active ? "Active" : "Inactive"}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.9em;">
+                                <div>${createdDate.toLocaleDateString()}</div>
+                                <div style="color: #6c757d; font-size: 0.8em;">${createdDate.toLocaleTimeString()}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.9em;">
+                                ${
+                                  lastUsedDate
+                                    ? `
+                                    <div>${formatRelativeTime(
+                                      lastUsedDate
+                                    )}</div>
+                                    <div style="color: #6c757d; font-size: 0.8em;">${lastUsedDate.toLocaleDateString()}</div>
+                                `
+                                    : '<span style="color: #6c757d;">Never</span>'
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                ${
+                                  apiKey.is_active
+                                    ? `
+                                    <button class="btn btn-danger btn-small" onclick="deactivateApiKey('${
+                                      apiKey.key_id
+                                    }', '${escapeHtml(
+                                        apiKey.name
+                                      )}')" title="Deactivate this API key">
+                                        🗑️ Deactivate
+                                    </button>
+                                `
+                                    : `
+                                    <span style="color: #6c757d; font-size: 0.9em;">Inactive</span>
+                                `
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                `;
+          })
+          .join("");
+      }
+
+      // Deactivate API key
+      async function deactivateApiKey(keyId, keyName) {
+        if (
+          !confirm(
+            `Are you sure you want to deactivate the API key "${keyName}"?\n\nThis action cannot be undone and will immediately stop all requests using this key.`
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/admin/api/v1/api-keys/${keyId}`, {
+            method: "DELETE",
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showCopyNotification(
+              "🗑️ API key deactivated successfully",
+              "warning"
+            );
+            loadApiKeys();
+          } else {
+            showError("Error deactivating API key: " + result.error);
+          }
+        } catch (error) {
+          showError("Error: " + error.message);
+        }
+      }
+
+      // Copy to clipboard function
+      function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        copyText(element.textContent);
+      }
+
+      function copyText(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            showCopyNotification();
+          })
+          .catch((err) => {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+              document.execCommand("copy");
+              showCopyNotification();
+            } catch (err) {
+              console.error("Failed to copy text: ", err);
+              showCopyNotification("❌ Failed to copy", "error");
+            }
+
+            document.body.removeChild(textArea);
+          });
+      }
+
+      // Show copy notification
+      function showCopyNotification(
+        message = "✅ Copied to clipboard!",
+        type = "success"
+      ) {
+        const notification = document.getElementById("copyNotification");
+        notification.innerHTML = message;
+
+        // Update notification style based on type
+        notification.className = "copy-notification";
+        if (type === "warning") {
+          notification.style.background = "#ffc107";
+          notification.style.color = "#212529";
+        } else if (type === "error") {
+          notification.style.background = "#dc3545";
+          notification.style.color = "white";
+        } else {
+          notification.style.background = "#28a745";
+          notification.style.color = "white";
+        }
+
+        notification.classList.add("show");
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      // Show error message
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage");
+        const errorText = document.getElementById("errorText");
+        errorText.textContent = message;
+        errorDiv.style.display = "flex";
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          errorDiv.style.display = "none";
+        }, 5000);
+      }
+
+      // Utility functions
+      function formatNumber(num) {
+        if (num >= 1000000) {
+          return (num / 1000000).toFixed(1) + "M";
+        } else if (num >= 1000) {
+          return (num / 1000).toFixed(1) + "K";
+        }
+        return num.toString();
+      }
+
+      function formatRelativeTime(date) {
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+        const diffMinutes = Math.ceil(diffTime / (1000 * 60));
+
+        if (diffMinutes < 60) {
+          return diffMinutes === 1
+            ? "1 minute ago"
+            : `${diffMinutes} minutes ago`;
+        } else if (diffHours < 24) {
+          return diffHours === 1 ? "1 hour ago" : `${diffHours} hours ago`;
+        } else if (diffDays < 30) {
+          return diffDays === 1 ? "1 day ago" : `${diffDays} days ago`;
+        } else {
+          return date.toLocaleDateString();
+        }
+      }
+
+      function escapeHtml(text) {
+        if (!text) return "";
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Auto-refresh every 30 seconds
+      setInterval(() => {
+        loadApiKeys();
+      }, 30000);
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        // Ctrl/Cmd + R for refresh
+        if ((e.ctrlKey || e.metaKey) && e.key === "r") {
+          e.preventDefault();
+          loadApiKeys();
+        }
+
+        // Ctrl/Cmd + N for new API key
+        if ((e.ctrlKey || e.metaKey) && e.key === "n") {
+          e.preventDefault();
+          document.getElementById("apiKeyName").focus();
+        }
+
+        // Escape to clear form
+        if (e.key === "Escape") {
+          document.getElementById("createApiKeyForm").reset();
+          document.getElementById("newApiKeyResult").style.display = "none";
+        }
+      });
+
+      // Form validation
+      document.getElementById("apiKeyName").addEventListener("input", (e) => {
+        const value = e.target.value;
+        const createBtn = document.getElementById("createBtn");
+
+        if (value.trim().length >= 3) {
+          createBtn.disabled = false;
+        } else {
+          createBtn.disabled = true;
+        }
+      });
+
+      // Character count for description
+      document
+        .getElementById("apiKeyDescription")
+        .addEventListener("input", (e) => {
+          const maxLength = 500;
+          const currentLength = e.target.value.length;
+          const remaining = maxLength - currentLength;
+
+          // You could add a character counter here if needed
+          if (remaining < 50) {
+            e.target.style.borderColor = remaining < 0 ? "#dc3545" : "#ffc107";
+          } else {
+            e.target.style.borderColor = "#e1e8ed";
+          }
+        });
+
+      // Close error message when clicked
+      document.getElementById("errorMessage").addEventListener("click", () => {
+        document.getElementById("errorMessage").style.display = "none";
+      });
+    </script>
+  </body>
+</html>
